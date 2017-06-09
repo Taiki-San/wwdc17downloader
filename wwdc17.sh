@@ -30,7 +30,7 @@ do
 
 	#Is there a video URL?
 	if [ -z "$dlURL" ] ; then
-		echo "Video $line ($talkName) doesn't appears to be available for now"
+		echo "Video $line ($talkName) doesn't appear to be available for now"
 		continue
 	fi
 
