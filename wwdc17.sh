@@ -3,6 +3,8 @@
 #Setup the environnement
 mkdir wwdc17
 cd wwdc17
+mkdir video
+mkdir slides
 mkdir tmp_download
 cd tmp_download
 
@@ -30,7 +32,7 @@ do
 	#We grep "_hd_" which bring up the download URL, then some cleanup
 	#If we were to want SD video, all we would have to do is replace _hd_ by _sd_
 	dlURL=$(cat webpage | grep _hd_ | sed -e "s/.*href\=//" -e "s/\>.*//" -e "s/\"//g")
-	pdfURL=$(cat webpage | grep .pdf | grep devstreaming | sed -e "s/.*href\=//" -e "s/\>.*//" -e "s/\"//g"  -e "s/ .*$//g")
+	pdfURL=$(cat webpage | grep "\.pdf" | sed -e "s/.*href\=//" -e "s/\>.*//" -e "s/\"//g")
 
 	rm webpage
 
@@ -39,7 +41,7 @@ do
 		echo "Video $line ($talkName) doesn't appear to be available for now"
 	else
 		#Great, we download the file
-		wget -c "$dlURL" -O "../$line - $talkName.mp4"
+		wget -c "$dlURL" -O "../video/$line - $talkName.mp4"
 	fi
 
 	#Is there a PDF URL?
@@ -47,7 +49,7 @@ do
 		echo "Slides for $line ($talkName) don't appear to be available for now"
 	else
 		#Great, we download the file
-		wget -c "$pdfURL" -O "../$line - $talkName.pdf"
+		wget -c "$pdfURL" -O "../slides/$line - $talkName.pdf"
 	fi
 
 done < "../downloadData"
